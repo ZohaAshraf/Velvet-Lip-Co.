@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M·A·C L'ÉLIXIR ROUGE | Scroll-Driven Animation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind Theme Config -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "surface-tint": "#b22935",
+                  "outline-variant": "#e1bebd",
+                  "background": "#fcf9f8",
+                  "surface-container-high": "#eae7e7",
+                  "on-tertiary-fixed-variant": "#584144",
+                  "error": "#ba1a1a",
+                  "on-primary": "#ffffff",
+                  "secondary-container": "#fed65b",
+                  "inverse-on-surface": "#f3f0ef",
+                  "on-secondary": "#ffffff",
+                  "error-container": "#ffdad6",
+                  "on-surface-variant": "#594140",
+                  "inverse-primary": "#ffb3b1",
+                  "on-secondary-container": "#745c00",
+                  "primary-fixed": "#ffdad8",
+                  "on-background": "#1c1b1b",
+                  "primary": "#7e0018",
+                  "on-primary-fixed": "#410008",
+                  "primary-container": "#a21c2b",
+                  "on-tertiary-fixed": "#281719",
+                  "on-primary-container": "#ffb4b3",
+                  "on-tertiary-container": "#dfc0c3",
+                  "on-error-container": "#93000a",
+                  "secondary-fixed-dim": "#e9c349",
+                  "on-tertiary": "#ffffff",
+                  "surface": "#fcf9f8",
+                  "surface-bright": "#fcf9f8",
+                  "surface-container-highest": "#e5e2e1",
+                  "tertiary-container": "#654d50",
+                  "tertiary-fixed": "#fcdbde",
+                  "tertiary-fixed-dim": "#debfc2",
+                  "surface-container-lowest": "#ffffff",
+                  "on-secondary-fixed-variant": "#574500",
+                  "on-secondary-fixed": "#241a00",
+                  "on-error": "#ffffff",
+                  "secondary": "#735c00",
+                  "inverse-surface": "#313030",
+                  "outline": "#8d706f",
+                  "primary-fixed-dim": "#ffb3b1",
+                  "tertiary": "#4c3639",
+                  "on-primary-fixed-variant": "#900a20",
+                  "surface-variant": "#e5e2e1",
+                  "secondary-fixed": "#ffe088",
+                  "surface-container-low": "#f6f3f2",
+                  "surface-container": "#f0eded",
+                  "surface-dim": "#dcd9d9",
+                  "on-surface": "#1c1b1b"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "margin-mobile": "20px",
+                  "unit": "8px",
+                  "margin-desktop": "80px",
+                  "gutter": "24px",
+                  "container-max": "1440px"
+          },
+          "fontFamily": {
+                  "headline-lg-mobile": ["Playfair Display"],
+                  "headline-lg": ["Playfair Display"],
+                  "body-md": ["Montserrat"],
+                  "headline-md": ["Playfair Display"],
+                  "button-text": ["Montserrat"],
+                  "label-caps": ["Montserrat"],
+                  "display-lg": ["Playfair Display"],
+                  "body-lg": ["Montserrat"]
+          },
+          "fontSize": {
+                  "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                  "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                  "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                  "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                  "button-text": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                  "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "600"}],
+                  "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                  "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+  <!-- Magnetic Cursor -->
+  <div class="magnetic-cursor hidden md:block" id="cursor"></div>
+  <div class="cursor-ring hidden md:block" id="cursor-ring"></div>
+
+
+  <!-- Luxury Preloader -->
+  <div id="preloader">
+    <div class="loader-content">
+      <h1 class="loader-logo">M·A·C</h1>
+      <p class="loader-subtitle">L'ÉLIXIR ROUGE</p>
+      <div class="loader-ring-container">
+        <svg class="loader-ring" viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="45"></circle>
+          <circle class="ring-progress" id="ring-progress" cx="50" cy="50" r="45"></circle>
+        </svg>
+        <span class="loader-percentage" id="loader-percentage">0%</span>
+      </div>
+      <div class="loader-status">Formulating assets...</div>
+    </div>
+  </div>
+
+  <!-- Premium Header / Navigation Bar -->
+  <header class="fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b border-transparent py-6 px-margin-desktop bg-transparent header-dark">
+    <div class="max-w-container-max mx-auto flex justify-between items-center">
+      <!-- Logo -->
+      <a href="#" class="logo-text font-display-lg text-[22px] tracking-[0.2em] hover:opacity-80 transition-opacity font-bold">MAISON ROUGE</a>
+      
+      <!-- Nav Menu (Desktop) -->
+      <nav class="hidden md:flex gap-10">
+        <a href="#heritage" class="nav-link font-label-caps text-[11px] tracking-[0.2em] uppercase transition-colors duration-300">Heritage</a>
+        <a href="#shades" class="nav-link font-label-caps text-[11px] tracking-[0.2em] uppercase transition-colors duration-300">Shades</a>
+        <a href="#ingredients" class="nav-link font-label-caps text-[11px] tracking-[0.2em] uppercase transition-colors duration-300">Ingredients</a>
+        <a href="#campaign" class="nav-link font-label-caps text-[11px] tracking-[0.2em] uppercase transition-colors duration-300">Campaign</a>
+        <a href="#try-on" class="nav-link font-label-caps text-[11px] tracking-[0.2em] uppercase transition-colors duration-300">Try-On</a>
+      </nav>
+
+      <!-- CTA / Action Menu -->
+      <div class="flex items-center gap-6">
+        <button onclick="document.getElementById('shades').scrollIntoView({ behavior: 'smooth' })" class="hidden sm:inline-block border px-6 py-2.5 font-button-text text-[10px] tracking-[0.2em] uppercase transition-all duration-300">Reserve</button>
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="md:hidden focus:outline-none flex items-center justify-center">
+          <span class="material-symbols-outlined text-3xl">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-surface-dim/95 z-40 hidden flex-col justify-center items-center gap-8">
+      <button id="mobile-menu-close" class="absolute top-6 right-6 text-primary focus:outline-none">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+      <a href="#heritage" class="mobile-nav-link font-display-lg text-3xl text-on-surface hover:text-primary uppercase">Heritage</a>
+      <a href="#shades" class="mobile-nav-link font-display-lg text-3xl text-on-surface hover:text-primary uppercase">Shades</a>
+      <a href="#ingredients" class="mobile-nav-link font-display-lg text-3xl text-on-surface hover:text-primary uppercase">Ingredients</a>
+      <a href="#campaign" class="mobile-nav-link font-display-lg text-3xl text-on-surface hover:text-primary uppercase">Campaign</a>
+      <a href="#try-on" class="mobile-nav-link font-display-lg text-3xl text-on-surface hover:text-primary uppercase">Try-On</a>
+      <button onclick="document.getElementById('shades').scrollIntoView({ behavior: 'smooth' }); document.getElementById('mobile-menu').classList.add('hidden');" class="mt-6 border border-primary text-primary px-8 py-3 font-button-text text-[12px] tracking-[0.2em] uppercase hover:bg-primary hover:text-white transition-all">Reserve Now</button>
+    </div>
+  </header>
+
+  <!-- Pinned Scroll Container for Animation -->
+  <main id="scroll-container">
+    <div class="canvas-container">
+      <canvas id="lipstick-canvas"></canvas>
+      <!-- Luxury Hero Overlay -->
+      <div class="hero-overlay">
+        <h1 class="hero-title">Velvet Desire</h1>
+        <p class="hero-subtitle">Where Elegance Meets Color</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Storytelling Section: The Art of Seduction -->
+  <section id="heritage" class="py-40 px-margin-desktop bg-surface overflow-hidden">
+    <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+      <div class="reveal-up">
+        <span class="font-label-caps text-label-caps text-primary mb-6 block">CHAPTER I</span>
+        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-8 leading-tight">The Art of <br/><span class="italic font-normal">Seduction</span></h2>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-md">
+          Each stroke is a manifesto of power. Maison Rouge creates more than color; we craft a semiotic signature of elegance, formulated in the heart of Paris with centuries of botanical wisdom.
+        </p>
+        <div class="w-full h-[1px] bg-outline-variant/30 mb-10"></div>
+        <a class="font-button-text text-button-text text-primary border-b border-primary pb-1 uppercase tracking-widest hover:text-black hover:border-black transition-all duration-300" href="#">Discover Our Heritage</a>
+      </div>
+      <div class="relative group h-[700px] overflow-hidden rounded-lg shadow-2xl reveal-up" style="transition-delay: 300ms;">
+        <div class="w-full h-full bg-cover bg-center group-hover:scale-110 transition-transform duration-[2000ms] ease-out" data-alt="Macro high-fashion editorial shot of a rich, creamy ruby red lipstick texture. Swirls of deep crimson pigment with microscopic golden shimmers, illuminated by soft gallery lighting. The aesthetic is ultra-luxurious, clean, and minimalist, capturing the physical essence of Maison Rouge quality." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDs4QUVcSJnq71airvGCedcNHnMfZtzmC_k_1CffwpSUQnuyumZKa_sCvTxMYTFUg3kPL6OLHnt8rpQCOMjJBU89Bop95Js2YGNIrlIaQZnvzhnXwOqSdGW0c4QUy7WeGdPPrCB3X3py7DrDgVAJYh5wQqTgQub46zwOSh8oWSauwJeVoz-kBiwGq2-xxfCtRdGcTfT2d3gVayAuTAgRbZDhQWgRt9-CQkL2p3Z1KBZHlJi6IQz3xpI884Csf5x_WTsRI3z9VDHd5A')"></div>
+        <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-1000"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shade Selector Section -->
+  <section id="shades" class="py-40 bg-surface-container-low border-y border-outline-variant/20">
+    <div class="max-w-container-max mx-auto px-margin-desktop text-center mb-24">
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-4 reveal-up">The Curation of Crimson</h2>
+      <p class="font-body-md text-on-surface-variant reveal-up">Select your weapon of choice from our signature archival shades.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-desktop max-w-container-max mx-auto">
+      <!-- Shade 1 -->
+      <div class="group cursor-pointer reveal-up" style="transition-delay: 100ms;">
+        <div class="relative aspect-[3/4] overflow-hidden mb-8 bg-surface-container-highest rounded-sm">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A portrait of a high-fashion model wearing deep, dark crimson matte lipstick 'Ruby Rush'. The composition is high-contrast with soft lighting, focusing on the precision of the application. The background is a minimalist ivory studio set. Luxury editorial style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIgzrHPZxgoSDfP3HlkLJDDF3OHlNJC9RjRUA2P9H5edpTie4v6HMmpVO_ma8G1RThFnbFlJnXAPyTSYpVBvP7tWaX7Ub4nSCk5RZsYb4tkV1orWhwed4GyYkR77ALIPOwFAqELiTfN4rrjNS5Yzryt7QjMjFtk81z0qFPnJAnndfWlGhkpedPC4R1y-qi7iouqD1i-n3DEJFoENCzWDfBtBSK6lwvFagb-Ri_2w25d2ficEbJA6zIZq5-InCah5_j63i0RDl3gWE"/>
+          <div class="absolute bottom-0 left-0 w-full glass-card p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+            <button class="w-full bg-primary text-white py-3 font-button-text uppercase tracking-widest">Reserve Shade</button>
+          </div>
+        </div>
+        <h3 class="font-headline-md text-[24px] text-primary mb-1">Ruby Rush</h3>
+        <p class="font-label-caps text-on-surface-variant uppercase text-[10px]">Deep Matte Archetype</p>
+      </div>
+      <!-- Shade 2 -->
+      <div class="group cursor-pointer reveal-up" style="transition-delay: 300ms;">
+        <div class="relative aspect-[3/4] overflow-hidden mb-8 bg-surface-container-highest rounded-sm">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Close up photography of a model with 'Velvet Vixen' shade, a classic bright red with a satin finish. Lighting is cinematic and warm, highlighting the lush hydration of the product. Elegant aesthetic with soft shadows. Maison Rouge branding feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD13gp1U0-o6nPVL8-PNabnwp1NtWvaVotCjvCAj9wTNdPlAQzz_Ub3Y9RkrrkoPXAntQR8tsY1wd_PNISYCwu8JyeeNkXnC3LZTFgyUNdSFUfqEtN8KBu6eQyeegxOwaGDOAtTL5MhoVtOaa9KaQl5ntb4izXDVIDcGQdbKgb7-NjWLlNULWxVVKpqkz2k1wkaR3P0Oq5b68bYIkkwZYIZM0wSjdw05B8a8QxH4sMfc4wOd8mE7bnrH9QTrMseND9u1-5fPUKnb8"/>
+          <div class="absolute bottom-0 left-0 w-full glass-card p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+            <button class="w-full bg-primary text-white py-3 font-button-text uppercase tracking-widest">Reserve Shade</button>
+          </div>
+        </div>
+        <h3 class="font-headline-md text-[24px] text-primary mb-1">Velvet Vixen</h3>
+        <p class="font-label-caps text-on-surface-variant uppercase text-[10px]">Classic Satin Radiance</p>
+      </div>
+      <!-- Shade 3 -->
+      <div class="group cursor-pointer reveal-up" style="transition-delay: 500ms;">
+        <div class="relative aspect-[3/4] overflow-hidden mb-8 bg-surface-container-highest rounded-sm">
+          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Avant-garde beauty editorial showing 'Crimson Couture' lipstick, a bold, high-shine lacquer red. The model has a sophisticated look with sharp features. Minimalist background in soft blush tones. High-end luxury fashion photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLHKrhkVJVsZd8KKGlsXZlbGh2655ozs36jfzenvMjyanF_uBt_FY5jZyg1VEf3LY6TINMKYO89D7an9VnNhBA4M6LiBebU8POxTdmRiSNAVHD4jr7SHGdnKWumRXKO-ktYMI8AyM-sN0n6OISTEJZmEdxvKiF_2k8vUHlfTQttXUUhE6DcWHVwIFApNx2vZEwfTTTFoYM82kCJ9xV59kjKewm6L1g8JwXflmQJQ5A-nkYXL73W35BqqwY1zC7spXc0sqYvEkv32g"/>
+          <div class="absolute bottom-0 left-0 w-full glass-card p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+            <button class="w-full bg-primary text-white py-3 font-button-text uppercase tracking-widest">Reserve Shade</button>
+          </div>
+        </div>
+        <h3 class="font-headline-md text-[24px] text-primary mb-1">Crimson Couture</h3>
+        <p class="font-label-caps text-on-surface-variant uppercase text-[10px]">High-Shine Lacquer</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ingredients: The Essence of Luxury -->
+  <section id="ingredients" class="py-40 relative bg-surface-dim">
+    <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div class="order-2 lg:order-1 relative h-[600px] flex items-center justify-center">
+        <!-- Floating Glass Cards for Ingredients -->
+        <div class="glass-card p-10 absolute top-0 right-10 z-20 w-72 reveal-up" style="transition-delay: 200ms;">
+          <span class="material-symbols-outlined text-primary text-4xl mb-4">water_drop</span>
+          <h4 class="font-headline-md text-[20px] mb-2">Hyaluronic Acid</h4>
+          <p class="font-body-md text-on-surface-variant text-sm">Ultra-molecular weight spheres for 24-hour hydration and volume.</p>
+        </div>
+        <div class="glass-card p-10 absolute bottom-10 left-10 z-20 w-72 reveal-up" style="transition-delay: 400ms;">
+          <span class="material-symbols-outlined text-primary text-4xl mb-4">eco</span>
+          <h4 class="font-headline-md text-[20px] mb-2">Precious Oils</h4>
+          <p class="font-body-md text-on-surface-variant text-sm">Infused with Rosa Damascena and Jojoba for a weightless glide.</p>
+        </div>
+        <div class="w-3/4 h-3/4 bg-cover bg-center rounded-full border-8 border-white/50 shadow-inner" data-alt="An artistic, abstract still-life of glass laboratory beakers containing rose petals and golden shimmering oils. Clean, bright, airy lighting with soft caustic reflections from the glass. Minimalist white background, expressing the 'Essence of Luxury' through scientific purity and nature." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCX1v_z7MSNSIs0CkhoCQV7bTbjrG58XuuE_Pb85PPr6ZVGDVUjPP8Pl5rc-8-0Z6D8UXLSWk_GaUGjw4OiHu5rkdw10GXx1-5HkdZ5s55OV30nRo-4zJk92XF0p32C4bd2tNdxK9RMqcViPevDRdLK66H3S71HxkZl8ozP_F4uOj03E8RMduZ0B5Pb-6mMMEfIcgWNUcuasDXMGb-KK8-SxbOk4xUxLWH4Z2wIt_Hcj4D44awc0MvWvT3MVT1ct0bPdbXEMikqYn4')"></div>
+      </div>
+      <div class="order-1 lg:order-2 reveal-up">
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-8">The Essence <br/>of Luxury</h2>
+        <p class="font-body-lg text-body-lg mb-12">
+          Maison Rouge lipsticks are formulated as skincare first. We treat the delicate lip barrier with the same reverence as haute-skincare, ensuring your statement color never compromises comfort.
+        </p>
+        <button class="border border-primary text-primary px-12 py-5 font-button-text uppercase tracking-widest hover:bg-primary hover:text-white transition-all duration-500">
+          The Science of Rouge
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial Campaign Section -->
+  <section id="campaign" class="py-40 bg-on-background text-white overflow-hidden">
+    <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-12 gap-gutter items-center">
+      <div class="col-span-12 lg:col-span-5 mb-20 lg:mb-0 reveal-up">
+        <h3 class="font-display-lg text-headline-lg-mobile md:text-headline-lg mb-10 leading-tight">The <br/><span class="text-primary italic">Aesthete</span> <br/>Campaign</h3>
+        <p class="font-body-lg text-surface-variant/80 max-w-sm mb-12">Captured by Carsten Witte, our latest campaign explores the intersection of brutalist architecture and the softness of feminine strength.</p>
+        <div class="flex gap-4">
+          <button class="bg-white text-primary px-8 py-4 font-button-text uppercase tracking-widest">View Film</button>
+          <button class="border border-white/30 text-white px-8 py-4 font-button-text uppercase tracking-widest hover:bg-white hover:text-primary transition-all">Lookbook</button>
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-7 grid grid-cols-2 gap-4">
+        <div class="h-[600px] overflow-hidden rounded-sm reveal-up" style="transition-delay: 200ms;">
+          <img class="w-full h-full object-cover" data-alt="High-fashion model in a sharp black blazer against a brutalist concrete background, wearing Maison Rouge lipstick. Dramatic side lighting, heavy contrast. Cinematic, expensive mood. Black and white aesthetic with only the red lips in color." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3XmzsXw330H-xt1x2LOoH8IjdnAuaWGOzrcMzg2NGP1RCAgdChSHEkKgeoSd1CbwdILQW4YGXs2j0Kp_EOdPnH5QC4WwSimUBsQ9T9L0ASNEwvQgTRLGgYEbzTdsW641N8cokepG2F5CqOtS_rgfjU3kT2lL_SdFCdrBwhfKckZsmC9tsbPZ3ktROJEH4RvQpfP1NCOj9ig5C4oxdz8hDVieE5zdOHbbxT3LCThhT3Nb8Ua8jtRtqu119DqmgY1EqzB7kk1K4UtY"/>
+        </div>
+        <div class="h-[500px] mt-24 overflow-hidden rounded-sm reveal-up" style="transition-delay: 400ms;">
+          <img class="w-full h-full object-cover" data-alt="Artistic architectural shot of a spiraling staircase with soft shadows, representing the structural elegance of Maison Rouge design. High key, minimalist, clean lines. Editorial fashion vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5ZZfZFrwJPp-ceGDkBpWrPnlh0qAfUu2VSoRVRIu5_hJGS6w1rIzq68VLYDKPo9NLD2YAM12gIRHDxaDMeYzkzPOHsaVpkP0_OvSLtHvwCNH8SLjnu5d_3K-HWUd1CDmQMcSe02nMEsCeSD5tkCTh6CPSk1HanS8br1PR9uYi8hwAI3seuXLrXHNM9c5Py0q3UfaO3tDubokUHK31AJoE6nXzzxK1sMgT7wnPhLzPpb8OeYqdc7UWBRZ4Jy_DqeUpMj_hcvRIM64"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Virtual Try-On: Digital Atelier -->
+  <section id="try-on" class="py-60 relative overflow-hidden bg-background">
+    <div class="absolute inset-0 z-0">
+      <div class="w-full h-full opacity-20 pointer-events-none" style="display:block;">
+        <canvas id="shader-canvas-ANIMATION_21" style="display:block;width:100%;height:100%"></canvas>
+        <script>
+          (function() {
+            const canvas = document.getElementById('shader-canvas-ANIMATION_21');
+            function syncSize() {
+              const w = canvas.clientWidth  || 1280;
+              const h = canvas.clientHeight || 720;
+              if (canvas.width !== w || canvas.height !== h) {
+                canvas.width  = w;
+                canvas.height = h;
+              }
+            }
+            if (typeof ResizeObserver !== 'undefined') {
+              new ResizeObserver(syncSize).observe(canvas);
+            }
+            syncSize();
+
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) return;
+            const vs = `attribute vec2 a_position;
+            varying vec2 v_texCoord;
+            void main() {
+              v_texCoord = a_position * 0.5 + 0.5;
+              gl_Position = vec4(a_position, 0.0, 1.0);
+            }`;
+            const fs = `precision highp float;
+            uniform float u_time;
+            uniform vec2 u_resolution;
+            uniform vec2 u_mouse;
+            varying vec2 v_texCoord;
+
+            void main() {
+                vec2 uv = v_texCoord;
+                vec2 p = uv * 2.0 - 1.0;
+                p.x *= u_resolution.x / u_resolution.y;
+                
+                float t = u_time * 0.15;
+                for(float i = 1.0; i < 5.0; i++) {
+                    p.x += 0.4 / i * sin(i * 2.5 * p.y + t + u_mouse.x/u_resolution.x);
+                    p.y += 0.4 / i * cos(i * 2.5 * p.x + t + u_mouse.y/u_resolution.y);
+                }
+                
+                vec3 ruby = vec3(0.494, 0.0, 0.094);    // #7e0018
+                vec3 deepRuby = vec3(0.2, 0.0, 0.02);
+                vec3 ivory = vec3(0.988, 0.976, 0.973);  // #fcf9f8
+                vec3 champagne = vec3(0.98, 0.86, 0.82);
+                
+                float mask = smoothstep(-1.2, 1.2, p.x + p.y);
+                vec3 baseColor = mix(ivory, ruby, mask * 0.8);
+                
+                float shimmer = pow(abs(sin(p.x * 1.5 + t)), 12.0) * 0.08;
+                baseColor += vec3(1.0, 0.9, 0.8) * shimmer;
+                
+                gl_FragColor = vec4(baseColor, 1.0);
+            }`;
+            function cs(type, src) {
+              const s = gl.createShader(type);
+              gl.shaderSource(s, src);
+              gl.compileShader(s);
+              return s;
+            }
+            const prog = gl.createProgram();
+            gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+            gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+            gl.linkProgram(prog);
+            gl.useProgram(prog);
+            const buf = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+            const pos = gl.getAttribLocation(prog, 'a_position');
+            gl.enableVertexAttribArray(pos);
+            gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+            const uTime = gl.getUniformLocation(prog, 'u_time');
+            const uRes = gl.getUniformLocation(prog, 'u_resolution');
+            const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+            let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+            window.addEventListener('mousemove', (event) => {
+              const rect = canvas.getBoundingClientRect();
+              if (rect.width && rect.height) {
+                const nx = (event.clientX - rect.left) / rect.width;
+                const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+                mouse.x = nx * canvas.width;
+                mouse.y = ny * canvas.height;
+              }
+            });
+
+            function render(t) {
+              if (typeof ResizeObserver === 'undefined') syncSize();
+              gl.viewport(0, 0, canvas.width, canvas.height);
+              if (uTime) gl.uniform1f(uTime, t * 0.001);
+              if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+              if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+              gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+              requestAnimationFrame(render);
+            }
+            render(0);
+          })();
+        </script>
+      </div>
+    </div>
+    <div class="max-w-container-max mx-auto px-margin-desktop text-center relative z-10">
+      <div class="reveal-up">
+        <h2 class="font-display-lg text-headline-lg mb-6">Digital Atelier</h2>
+        <p class="font-body-lg text-on-surface-variant mb-12 max-w-2xl mx-auto">
+          Experience the collection through our precision AR lens. Your reflection, redefined by Maison Rouge artistry.
+        </p>
+        <div class="relative inline-block group">
+          <div class="absolute -inset-4 bg-primary/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+          <button class="relative bg-primary text-white w-32 h-32 rounded-full font-button-text text-[10px] uppercase tracking-widest flex items-center justify-center border-4 border-white shadow-2xl transition-transform duration-500 group-hover:scale-110">
+            Launch<br/>Try-On
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-surface py-20 px-margin-desktop border-t border-outline-variant/30">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto">
+      <div class="col-span-1 md:col-span-4 mb-16">
+        <h2 class="font-display-lg text-headline-lg text-primary mb-8 tracking-tighter">MAISON ROUGE</h2>
+        <div class="h-[1px] w-full bg-outline-variant/30"></div>
+      </div>
+      <div>
+        <h5 class="font-label-caps text-label-caps text-primary mb-6 uppercase">Service</h5>
+        <ul class="flex flex-col gap-4 font-body-md text-on-surface-variant">
+          <li><a class="hover:text-primary transition-all duration-300" href="#">VIP Membership</a></li>
+          <li><a class="hover:text-primary transition-all duration-300" href="#">Boutique Locator</a></li>
+          <li><a class="hover:text-primary transition-all duration-300" href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-label-caps text-label-caps text-primary mb-6 uppercase">Maison</h5>
+        <ul class="flex flex-col gap-4 font-body-md text-on-surface-variant">
+          <li><a class="hover:text-primary transition-all duration-300" href="#">Sustainability</a></li>
+          <li><a class="hover:text-primary transition-all duration-300" href="#">Heritage</a></li>
+          <li><a class="hover:text-primary transition-all duration-300" href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-label-caps text-label-caps text-primary mb-6 uppercase">Legal</h5>
+        <ul class="flex flex-col gap-4 font-body-md text-on-surface-variant">
+          <li><a class="hover:text-primary transition-all duration-300" href="#">Legal</a></li>
+          <li><a class="hover:text-primary transition-all duration-300" href="#">Privacy Policy</a></li>
+          <li><a class="hover:text-primary transition-all duration-300" href="#">Cookies</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-label-caps text-label-caps text-primary mb-6 uppercase">Newsletter</h5>
+        <p class="font-body-md text-on-surface-variant text-sm mb-6">Join the inner circle for exclusive previews.</p>
+        <div class="relative">
+          <input class="w-full bg-transparent border-b border-primary py-2 outline-none font-label-caps text-[10px] uppercase" placeholder="YOUR EMAIL" type="email"/>
+          <button class="absolute right-0 bottom-2 text-primary font-bold">JOIN</button>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-container-max mx-auto mt-20 pt-8 border-t border-outline-variant/20 flex justify-between items-center text-[10px] font-label-caps text-on-surface-variant uppercase tracking-widest opacity-80">
+      <span>© 2024 MAISON ROUGE. ALL RIGHTS RESERVED.</span>
+      <div class="flex gap-6">
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Pinterest</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./main.js"></script>
+
+</body>
+</html>

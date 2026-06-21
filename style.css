@@ -1,0 +1,315 @@
+/* Custom Design Tokens & Variables */
+:root {
+  --bg-black: #060606;
+  --gold-primary: #d4af37;
+  --text-white: #f5f5f7;
+  --text-muted: #8e8e93;
+}
+
+/* Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-black);
+  color: var(--text-white);
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-black);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary);
+}
+
+/* Luxury Preloader */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-black);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+}
+
+#preloader.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  letter-spacing: 10px;
+  color: var(--text-white);
+  margin-bottom: 5px;
+}
+
+.loader-subtitle {
+  font-size: 0.75rem;
+  letter-spacing: 5px;
+  color: var(--gold-primary);
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.loader-ring-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.loader-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.03);
+  stroke-width: 2px;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: var(--gold-primary);
+  stroke-width: 2px;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s ease;
+}
+
+.loader-percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  font-weight: 200;
+}
+
+.loader-status {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Pinned Scroll Container */
+#scroll-container {
+  position: relative;
+  width: 100%;
+  height: 350vh; /* Determines the scroll length for the animation */
+  background-color: var(--bg-black);
+}
+
+.canvas-container {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#lipstick-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Maison Rouge Custom Styles from code.html */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+.magnetic-cursor {
+  width: 12px;
+  height: 12px;
+  background: #7e0018;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease-out;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #7e0018;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.3s ease-out;
+  opacity: 0.3;
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.metallic-text {
+  background: linear-gradient(135deg, #7e0018 0%, #a21c2b 50%, #7e0018 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Luxury Hero Overlay Styling */
+.hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 90%;
+  box-sizing: border-box;
+}
+
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: 5rem;
+  font-weight: 700; /* Bold luxury fashion-house editorial style */
+  letter-spacing: 8px;
+  color: #58000e; /* Deep rich wine-red/burgundy */
+  text-shadow: 0 2px 12px rgba(88, 0, 14, 0.15); /* Subtle tone-on-tone glow */
+  line-height: 1.1;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.8rem;
+    letter-spacing: 3px;
+  }
+}
+
+.hero-subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600; /* Bolder weighting for high readability */
+  letter-spacing: 12px;
+  color: #7e0018; /* Bold crimson brand burgundy */
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.6); /* Soft light backing to ensure contrast */
+  padding-left: 12px; /* offset letter-spacing for true center */
+}
+
+@media (max-width: 768px) {
+  .hero-subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 8px;
+    padding-left: 8px;
+  }
+}
+
+/* Navigation Header Styles */
+header.header-dark {
+  background-color: transparent;
+  border-color: transparent;
+}
+header.header-dark .nav-link {
+  color: #ffffff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35); /* Soft drop shadow for legibility */
+}
+header.header-dark .nav-link:hover {
+  color: #d4af37; /* Highlight with elegant gold */
+}
+header.header-dark .logo-text {
+  color: #ffffff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+header.header-dark button {
+  border-color: #ffffff;
+  color: #ffffff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+}
+header.header-dark button:hover {
+  background-color: #ffffff;
+  color: #7e0018;
+  border-color: #ffffff;
+}
+header.header-dark #mobile-menu-toggle {
+  color: #ffffff;
+}
+
+header.header-light {
+  background-color: rgba(252, 249, 248, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(126, 0, 24, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+header.header-light .nav-link {
+  color: #1a1a1a;
+}
+header.header-light .nav-link:hover {
+  color: #7e0018;
+}
+header.header-light .logo-text {
+  color: #7e0018;
+}
+header.header-light button {
+  border-color: #7e0018;
+  color: #7e0018;
+}
+header.header-light button:hover {
+  background-color: #7e0018;
+  color: #ffffff;
+}
+header.header-light #mobile-menu-toggle {
+  color: #7e0018;
+}
+
+
